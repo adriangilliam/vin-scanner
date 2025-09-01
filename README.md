@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VIN Barcode Scanner
+
+A web application that uses your mobile device's camera to scan VIN (Vehicle Identification Number) barcodes and display the VIN number.
+
+## Features
+
+- 📱 Mobile-friendly camera interface
+- 📸 Real-time barcode scanning using ZXing library
+- ✅ VIN validation (17-character length)
+- 🔒 Secure camera access with permission handling
+- 📱 Responsive design optimized for mobile devices
+
+## Tech Stack
+
+- Next.js 15 with TypeScript
+- Tailwind CSS for styling
+- ZXing library for barcode scanning
+- Browser MediaDevices API for camera access
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Important Notes
 
-## Learn More
+- **HTTPS Required**: Camera access requires HTTPS in production. This app will work on:
+  - localhost (HTTP is allowed)
+  - Vercel deployment (automatic HTTPS)
+  - Any HTTPS domain
 
-To learn more about Next.js, take a look at the following resources:
+- **Mobile Optimization**: The app is designed primarily for mobile devices with cameras. It will attempt to use the rear-facing camera when available.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Browser Compatibility**: Modern browsers with WebRTC support are required.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment on Vercel
 
-## Deploy on Vercel
+1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Connect your repository to Vercel:
+   - Go to [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your Git repository
+   - Click "Deploy"
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Vercel will automatically:
+   - Detect it's a Next.js project
+   - Install dependencies
+   - Build and deploy
+   - Provide HTTPS by default
+
+## Usage
+
+1. Open the app on your mobile device
+2. Tap "Start Scanning" 
+3. Allow camera permissions when prompted
+4. Point your camera at a VIN barcode
+5. The app will automatically detect and display the VIN when found
+6. Tap "Scan Another VIN" to scan additional codes
+
+## License
+
+MIT License
