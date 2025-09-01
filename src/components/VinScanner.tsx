@@ -11,6 +11,7 @@ export default function VinScanner() {
   const [error, setError] = useState<string>('');
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const readerRef = useRef<BrowserMultiFormatReader | null>(null);
+  const controlsRef = useRef<{ stop: () => void } | null>(null);
 
   useEffect(() => {
     // Initialize the barcode reader
@@ -18,8 +19,8 @@ export default function VinScanner() {
     
     return () => {
       // Cleanup on unmount
-      if (readerRef.current) {
-        readerRef.current.reset();
+      if (controlsRef.current) {
+        controlsRef.current.stop();
       }
     };
   }, []);
@@ -45,7 +46,7 @@ export default function VinScanner() {
         
         // Start scanning with ZXing
         if (readerRef.current) {
-          readerRef.current.decodeFromVideoDevice(
+          const controlsPromise = readerRef.current.decodeFromVideoDevice(
             undefined, // Use default video device
             videoRef.current,
             (result, error) => {
@@ -67,9 +68,13 @@ export default function VinScanner() {
               }
             }
           );
+          
+          controlsPromise.then((controls) => {
+            controlsRef.current = controls;
+          });
         }
       }
-    } catch (err) {
+    } catch {
       setHasPermission(false);
       setError('Camera access denied. Please allow camera access and try again.');
       setIsScanning(false);
@@ -79,8 +84,9 @@ export default function VinScanner() {
   const stopScanning = () => {
     setIsScanning(false);
     
-    if (readerRef.current) {
-      readerRef.current.reset();
+    if (controlsRef.current) {
+      controlsRef.current.stop();
+      controlsRef.current = null;
     }
     
     if (videoRef.current && videoRef.current.srcObject) {
